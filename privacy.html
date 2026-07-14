@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>தரவுப் பாதுகாப்புவழிகாட்டி | மேதகு களஞ்சியம்</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7;
+    --white:#FFFFFF;
+    --ink:#182B22;
+    --ink-soft:#4B5B52;
+    --green-deep:#000000;
+    --green:#22C35E;
+    --green-soft:#E4F5EC;
+    --shadow-sm: 0 2px 10px rgba(24,43,34,0.06);
+    --shadow-md: 0 12px 30px rgba(24,43,34,0.10);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+  }
+
+  h1,h2,h3{ font-family:'Fraunces', serif; margin:0; color:var(--ink); }
+  a{ text-decoration:none; color:inherit; }
+  button{ font-family:inherit; border:none; cursor:pointer; }
+
+  .navbar{
+    position:sticky; top:0; z-index:200;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 5%;
+    background:rgba(16, 135, 178, 0.186);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(24,43,34,0.06);
+  }
+
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:600; font-size:1.35rem; color:var(--green-deep); }
+  .mark{ width:34px; height:34px; border-radius:50%; overflow:hidden; background:linear-gradient(145deg, var(--green), var(--green-deep)); display:flex; align-items:center; justify-content:center; }
+  .mark img{ width:100%; height:100%; object-fit:cover; }
+
+  .nav-links{ display:flex; gap:24px; list-style:none; margin:0; padding:0; }
+  .nav-links a{ font-weight:600; color:var(--ink-soft); transition:color .25s ease; }
+  .nav-links a:hover{ color:var(--ink); }
+
+  .nav-toggle{ display:none; background:rgba(16, 135, 178, 0.186); color:var(--ink); width:48px; height:48px; align-items:center; justify-content:center; border-radius:16px; padding:10px; box-shadow:0 12px 28px rgba(24,43,34,0.12); transition:transform .2s ease, background .2s ease, box-shadow .2s ease; }
+  .nav-toggle:hover{ transform:scale(1.03); background:rgba(16, 135, 178, 0.26); }
+  .nav-toggle span{ display:block; width:24px; height:3px; margin:4px 0; border-radius:999px; background:var(--ink); transition:transform .3s ease, opacity .2s ease, background .2s ease; }
+  .nav-toggle.active span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2){ opacity:0; transform:scaleX(0); }
+  .nav-toggle.active span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+
+  @media (max-width:860px){
+    .nav-panel{ display:none; opacity:0; transform:translateY(-14px); pointer-events:none; transition:opacity .28s ease, transform .28s ease; }
+    .nav-toggle{ display:flex; flex-direction:column; }
+    .nav-panel.open{
+      display:flex; flex-direction:column; align-items:flex-start; gap:14px; opacity:1; transform:translateY(0); pointer-events:auto;
+      position:absolute; top:100%; left:12px; right:12px; background:#fff; padding:18px 20px 20px;
+      box-shadow:0 28px 72px rgba(24,43,34,0.16); border:1px solid rgba(24,43,34,0.08); border-radius:24px; z-index:250;
+    }
+    .nav-panel.open .nav-links{ display:grid; width:100%; grid-template-columns:1fr; gap:10px; padding:0; margin:0; }
+    .nav-panel.open .nav-links li{ list-style:none; opacity:0; transform:translateX(-14px); animation:menuItemIn .32s ease forwards; }
+    .nav-panel.open .nav-links li:nth-child(1){ animation-delay:0.08s; }
+    .nav-panel.open .nav-links li:nth-child(2){ animation-delay:0.16s; }
+    .nav-panel.open .nav-links li:nth-child(3){ animation-delay:0.24s; }
+    .nav-panel.open .nav-links a{ display:block; padding:14px 8px; font-size:0.98rem; border-radius:0; background:transparent; transition:color .25s ease, transform .25s ease; border:none; }
+    .nav-panel.open .nav-links a:hover{ background:transparent; color:var(--green-deep); transform:translateX(2px); }
+  }
+  @keyframes menuItemIn{ from{ opacity:0; transform:translateX(-14px); } to{ opacity:1; transform:translateX(0); } }
+
+  .page-shell{ max-width:900px; margin:0 auto; padding:60px 5%; }
+  .page-title{ font-size:clamp(2rem, 5vw, 3.5rem); margin-bottom:28px; color:var(--green-deep); text-align:center; }
+  .content-card{ background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow-md); padding:36px; }
+  .section{ margin-bottom:34px; }
+  .section h2{ font-size:1.35rem; margin-bottom:18px; color:var(--green-deep); }
+  .section p, .section li{ font-size:1rem; line-height:1.8; color:var(--ink); margin:0 0 14px; }
+  .section ul{ padding-left:22px; margin:0 0 16px; }
+  .section li{ margin-bottom:10px; }
+
+  .contact-box{ background:var(--green-soft); border-left:4px solid var(--green); padding:22px; border-radius:var(--radius-md); }
+  .contact-box h3{ margin:0 0 12px; color:var(--green-deep); }
+  .contact-box p{ margin:0 0 10px; }
+
+  .footer{ margin-top:60px; padding:40px 5%; text-align:center; color:var(--ink-soft); font-size:0.95rem; }
+  .footer a{ color:var(--green); font-weight:600; }
+
+  @media (max-width:768px){ .page-shell{ padding:40px 5%; } .content-card{ padding:24px; } }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="brand"><span class="mark"><img src="logo.png" alt="Logo"></span>மேதகு களஞ்சியம்</a>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-panel">
+    <ul class="nav-links">
+      <li><a href="index.html">முகப்பு</a></li>
+      <li><a href="terms.html">விதிமுறைகள்</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="page-shell">
+  <h1 class="page-title">தனியுரிமைக் கொள்கை</h1>
+  <div class="content-card">
+    <div class="section">
+      <h2>1. சேகரிக்கப்படும் விபரங்கள்</h2>
+      <ul>
+        <li>எங்களது இணையப் பக்கத்தில் வாசகர்களின் விபரங்களைத் தானாகச் சேகரிக்கும் மென்பொருள் வசதிகள் எதுவும் இல்லை.</li>
+        <li>நீங்கள் நூல்களை வாங்குவதற்காகப் புலனம் வழியாக எங்களைத் தொடர்பு கொள்ளும்போது மட்டுமே உங்களது பெயர், தொடர்பு எண், மற்றும் முகவரி ஆகிய விபரங்கள் எங்களால் பெறப்படுகின்றன.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h2>2. விபரங்கள் பயன்படுத்தப்படும் முறை</h2>
+      <ul>
+        <li>வாசகர்கள் வழங்கும் முகவரி மற்றும் தொடர்பு விபரங்கள் கீழ்க்காணும் நோக்கங்களுக்காக மட்டுமே பயன்படுத்தப்படும்:</li>
+        <li>நீங்கள் கோரிய நூற்பொதியை விரைவு அஞ்சல் அல்லது தூதுச் சேவை மூலம் உங்களது இருப்பிடத்திற்குச் சரியாக அனுப்பி வைக்க.</li>
+        <li>நூல்கள் அனுப்பப்பட்டதற்கான தடைய ஆவணங்களை உங்களது புலனத்திற்குப் பகிர்ந்து, தகவல்களை உறுதிப்படுத்த.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h2>3. பாதுகாப்பு உறுதிமொழி</h2>
+      <ul>
+        <li>வாசகர்களின் தனிப்பட்ட முகவரி மற்றும் தொடர்பு எண்கள் எக்காரணம் கொண்டும் பிற நபர்களுக்கோ அல்லது விளம்பர நிறுவனங்களுக்கோ விற்கப்படவோ அல்லது பகிரப்படவோ மாட்டாது.</li>
+        <li>உங்களது விபரங்கள் அனைத்தும் எங்களது புலன உரையாடலில் மட்டுமே பாதுகாப்பாக வைத்திருக்கப்படும்.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h2>4. மாற்று இணையப் பக்கங்களுக்கான இணைப்பு</h2>
+      <p>எங்களது இணையப் பக்கத்தில் உங்களை எங்களோடு இணைப்பதற்காக மட்டுமே புலன இணைப்பு கொடுக்கப்பட்டுள்ளது. அதனை வைத்து நீங்கள் புலனத்திற்குள் நுழையும் போது, அந்த நிறுவனத்தின் பாதுகாப்பு விதிகள் மட்டுமே பொருந்தும்.</p>
+    </div>
+    <div class="section">
+      <h2>5. ஐயங்களைத் தீர்க்க</h2>
+      <p>எங்களது தரவுப் பாதுகாப்புவழிகாட்டி குறித்து ஏதேனும் ஐயங்கள் இருந்தால், எங்களை கீழுள்ள முகவரியில் தொடர்பு கொள்ளலாம்:</p>
+      <div class="contact-box">
+        <h3>தொடர்பு விபரங்கள்</h3>
+        <p><strong>தொடர்பு எண்:</strong> +91 8248654946</p>
+        <p><strong>மின்னஞ்சல்:</strong> methagukalanjiyam@gmail.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <p><a href="index.html">← முகப்பிற்குத் திரும்புக</a></p>
+</footer>
+  <script>
+    const navToggleBtn = document.querySelector('.nav-toggle');
+    const navPanelEl = document.querySelector('.nav-panel');
+    if (navToggleBtn && navPanelEl){
+      const closeMenu = () => {
+        navPanelEl.classList.remove('open');
+        navToggleBtn.classList.remove('active');
+        navToggleBtn.setAttribute('aria-expanded','false');
+        navToggleBtn.setAttribute('aria-label','Open menu');
+      };
+      navToggleBtn.addEventListener('click', () => {
+        const isOpen = navPanelEl.classList.toggle('open');
+        navToggleBtn.classList.toggle('active', isOpen);
+        navToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        navToggleBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      });
+      navPanelEl.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+      document.addEventListener('click', (event) => {
+        if (!navPanelEl.contains(event.target) && !navToggleBtn.contains(event.target)) {
+          closeMenu();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

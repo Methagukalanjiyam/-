@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>விதிமுறைகளும் நிபந்தனைகளும் | மேதகு களஞ்சியம்</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7;
+    --white:#FFFFFF;
+    --ink:#182B22;
+    --ink-soft:#4B5B52;
+    --green-deep:#000000;
+    --green:#22C35E;
+    --green-soft:#E4F5EC;
+    --gold:#C89A3A;
+    --shadow-sm: 0 2px 10px rgba(24,43,34,0.06);
+    --shadow-md: 0 12px 30px rgba(24,43,34,0.10);
+    --shadow-lg: 0 24px 60px rgba(24,43,34,0.16);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1, h2, h3{
+    font-family:'Fraunces', serif;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{ text-decoration:none; color:inherit; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; border:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ============ NAV ============ */
+  .navbar{
+    position:sticky; top:0; z-index:200;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 5%;
+    background:rgba(16, 135, 178, 0.186);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(24,43,34,0.06);
+  }
+
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:600; font-size:1.35rem; color:var(--green-deep); }
+  
+  .brand .mark{
+    width:34px; height:34px; min-width:34px; min-height:34px;
+    border-radius:50%;
+    overflow:hidden;
+    background:linear-gradient(145deg, var(--green), var(--green-deep));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: var(--shadow-sm);
+    flex-shrink:0;
+    aspect-ratio:1/1;
+  }
+
+  .brand .mark img{
+    width:100%; height:100%; object-fit:cover;
+    display:block;
+    border-radius:50%;
+  }
+
+  .nav-panel{ display:flex; align-items:center; gap:24px; }
+  .nav-links{ display:flex; gap:34px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    font-weight:600; font-size:0.95rem; color:var(--ink-soft);
+    position:relative; padding-bottom:4px; transition:color .25s ease;
+  }
+
+  .nav-links a:hover{ color:var(--ink); }
+
+  .nav-toggle{ display:none; background:rgba(16, 135, 178, 0.186); color:var(--ink); width:48px; height:48px; align-items:center; justify-content:center; border-radius:16px; padding:10px; box-shadow:0 12px 28px rgba(24,43,34,0.12); transition:transform .2s ease, background .2s ease, box-shadow .2s ease; }
+  .nav-toggle:hover{ transform:scale(1.03); background:rgba(16, 135, 178, 0.26); }
+  .nav-toggle span{ display:block; width:24px; height:3px; margin:4px 0; border-radius:999px; background:var(--ink); transition:transform .3s ease, opacity .2s ease, background .2s ease; }
+  .nav-toggle.active span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2){ opacity:0; transform:scaleX(0); }
+  .nav-toggle.active span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+
+  @media (max-width:860px){
+    .nav-panel{ display:none; opacity:0; transform:translateY(-14px); pointer-events:none; transition:opacity .28s ease, transform .28s ease; }
+    .nav-toggle{ display:flex; flex-direction:column; }
+    .nav-panel.open{
+      display:flex; flex-direction:column; align-items:flex-start; gap:14px; opacity:1; transform:translateY(0); pointer-events:auto;
+      position:absolute; top:100%; left:12px; right:12px; background:#fff; padding:18px 20px 20px;
+      box-shadow:0 28px 72px rgba(24,43,34,0.16); border:1px solid rgba(24,43,34,0.08); border-radius:24px; z-index:250;
+    }
+    .nav-panel.open .nav-links{ display:grid; width:100%; grid-template-columns:1fr; gap:10px; padding:0; margin:0; }
+    .nav-panel.open .nav-links li{ list-style:none; opacity:0; transform:translateX(-14px); animation:menuItemIn .32s ease forwards; }
+    .nav-panel.open .nav-links li:nth-child(1){ animation-delay:0.08s; }
+    .nav-panel.open .nav-links li:nth-child(2){ animation-delay:0.16s; }
+    .nav-panel.open .nav-links li:nth-child(3){ animation-delay:0.24s; }
+    .nav-panel.open .nav-links a{ display:block; padding:14px 8px; font-size:0.98rem; border-radius:0; background:transparent; transition:color .25s ease, transform .25s ease; border:none; }
+    .nav-panel.open .nav-links a:hover{ background:transparent; color:var(--green-deep); transform:translateX(2px); }
+  }
+  @keyframes menuItemIn{ from{ opacity:0; transform:translateX(-14px); } to{ opacity:1; transform:translateX(0); } }
+
+  /* ============ CONTENT ============ */
+  .page-shell{
+    max-width:900px;
+    margin:0 auto;
+    padding:60px 5%;
+  }
+
+  .page-title{
+    font-size:clamp(2rem, 5vw, 3.5rem);
+    line-height:1.1;
+    text-align:center;
+    margin-bottom:60px;
+    color:var(--green-deep);
+  }
+
+  .terms-container{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    padding:40px;
+    box-shadow:var(--shadow-md);
+    line-height:1.8;
+  }
+
+  .terms-section{
+    margin-bottom:40px;
+  }
+
+  .terms-section h2{
+    font-size:1.4rem;
+    color:var(--green-deep);
+    margin-bottom:20px;
+    border-bottom:2px solid var(--green-soft);
+    padding-bottom:12px;
+  }
+
+  .terms-section p{
+    font-size:1rem;
+    color:var(--ink);
+    margin:0 0 16px;
+  }
+
+  .terms-section ol{
+    padding-left:24px;
+    margin:0;
+  }
+
+  .terms-section li{
+    font-size:1rem;
+    color:var(--ink);
+    margin-bottom:14px;
+    line-height:1.8;
+  }
+
+  .contact-box{
+    background:var(--green-soft);
+    border-left:4px solid var(--green);
+    padding:24px;
+    border-radius:var(--radius-md);
+    margin-top:40px;
+  }
+
+  .contact-box h3{
+    font-size:1.1rem;
+    color:var(--green-deep);
+    margin-bottom:16px;
+  }
+
+  .contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .contact-info p{
+    margin:0;
+    font-size:0.95rem;
+    color:var(--ink);
+  }
+
+  .contact-info strong{
+    font-weight:700;
+    color:var(--green-deep);
+  }
+
+  /* ============ FOOTER ============ */
+  .footer{
+    margin-top:80px;
+    padding:40px 5%;
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:0.9rem;
+    border-top:1px solid rgba(24,43,34,0.08);
+  }
+
+  @media (max-width: 768px){
+    .terms-container{
+      padding:24px;
+    }
+
+    .page-title{
+      font-size:1.8rem;
+      margin-bottom:40px;
+    }
+
+    .terms-section h2{
+      font-size:1.15rem;
+    }
+
+    .terms-section p,
+    .terms-section li{
+      font-size:0.95rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="brand">
+    <div class="mark">
+      <img src="logo.png" alt="மேதகு களஞ்சியம்">
+    </div>
+    <span>மேதகு களஞ்சியம்</span>
+  </div>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-panel">
+    <ul class="nav-links">
+      <li><a href="index.html">முகப்பு</a></li>
+      <li><a href="privacy.html">தனியுரிமைக் கொள்கை</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="page-shell">
+  <h1 class="page-title">விதிமுறைகளும் நிபந்தனைகளும்</h1>
+
+  <div class="terms-container">
+    <div class="terms-section">
+      <h2>வரவேற்பு</h2>
+      <p>மேதகு களஞ்சியம் புத்தக நிலையத்திற்கு உங்களை அன்போடு வரவேற்கிறோம். எங்கள் இணையப் பக்கத்தைப் பயன்படுத்துவதற்கும், நூல்களைத் தேர்வு செய்வதற்கும் கீழே உள்ள விதிமுறைகளும் நிபந்தனைகளும் பொருந்தும்.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>1. பொதுவானவை</h2>
+      <ul>
+        <li>இந்த இணையப் பக்கம் தமிழ் தேசியம் சார்ந்த  இணையத்தில் அல்லாத அரிய நூல்களை வாசகர்களுக்குக் கொண்டு சேர்ப்பதை நோக்கமாகக் கொண்டது.</li>
+        <li>இப்பக்கத்தில் உள்ள அனைத்து நூல்களின் விபரங்களும் விலைகளும் முன்னறிவிப்பின்றி மாற்றத்திற்குட்பட்டவை.</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>2. நூல்களைப் பெறும் முறை மற்றும் கட்டணம்</h2>
+      <ul>
+        <li>எங்கள் இணையப் பக்கத்தில் நேரடியாகப் பணம் செலுத்தும் வசதி இல்லை। நூல்களை வாங்குவதற்கு "புலனம் வழி வாங்குக"என்ற பொத்தானைப் பயன்படுத்தி மட்டுமே தொடர்பு கொள்ள முடியும்.</li>
+        <li>புலனம் வழியாக நீங்கள் கேட்கும் நூல்கள் கையிருப்பில் உள்ளதா என்பதை நாங்கள் உறுதி செய்த பின்னரே, எங்களுடைய அதிகாரப்பூர்வப் பணப் பரிமாற்ற விபரங்களை உங்களுக்கு அனுப்புவோம்.</li>
+        <li>பணம் அனுப்பிய பின், உங்களது பெயர், தொடர்பு எண் மற்றும் முகவரியைத் தெளிவாகப் புலனத்தில் அனுப்பி வைக்க வேண்டும்.</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>3. அஞ்சல் கட்டணம்</h2>
+      <ul>
+        <li>தமிழ்நாடு முழுவதும் அஞ்சல் கட்டணம் வெறும் 60 ரூபாய் மட்டுமே.</li>
+        <li>நீங்கள் எங்களின் இந்த இணையப் பக்கத்தில் எத்தனை நூல்களைத் தேர்ந்தெடுத்து வாங்கினாலும், ஒட்டுமொத்தப் பொதிக்கு சேர்த்து ஒரே ஒரு முறை மட்டும் 60 ரூபாய் கட்டணம் செலுத்தினால் போதுமானது.</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>4. பொதி மற்றும் தடம் அறிதல்</h2>
+      <ul>
+        <li>நீங்கள் பணம் அனுப்பி முகவரியைப் பகிர்ந்தவுடன், நூல்கள் விரைவு அஞ்சல் அல்லது தபால் சேவை மூலம் அனுப்பி வைக்கப்படும்.</li>
+        <li>நூல்களை நாங்கள் அனுப்பும் பொழுது, அதற்கான தடைய ஆவணங்களை உங்களது புலனத்திற்கு அனுப்பி வைத்து விடுவோம். அதனை வைத்து உங்களது பொதி எங்கு வருகிறது என்பதை நீங்கள் தடம் செய்து கொள்ளலாம்.</li>
+        <li>நாங்கள் பொதி அனுப்பியதிலிருந்து இரண்டு முதல் மூன்று நாட்களில் நூல்கள் உங்களது கைகளில் வந்து சேரும்.</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>5. நூல்கள் திரும்புதல்</h2>
+      <ul>
+        <li>ஒருமுறை விற்கப்பட்ட நூல்கள் எக்காரணம் கொண்டும் திரும்பப் பெறப்பட மாட்டாது.</li>
+        <li>உங்களுக்கு அனுப்பப்பட்ட நூல் ஏதேனும் சேதமடைந்திருந்தாலோ அல்லது தவறான நூல் அனுப்பப்பட்டிருந்தாலோ, அதைப் பொதி பிரிக்கும் காணொளி ஆதாரத்துடன்  மூன்று நாட்களுக்குள் எங்களது புலன எண்ணிற்குத் தெரிவித்தால், புதிய நூல் மாற்றித் தரப்படும்.</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>6. தொடர்புக்கு</h2>
+      <p>விதிமுறைகள் குறித்து ஏதேனும் ஐயங்கள் இருந்தால் அல்லது நூல்களை வாங்க எங்களை கீழுள்ள முகவரியில் தொடர்பு கொள்ளலாம்:</p>
+      
+      <div class="contact-box">
+        <h3>அதிகாரப்பூர்வ தொடர்பு விபரங்கள்</h3>
+        <div class="contact-info">
+          <p><strong>தொடர்பு எண்:</strong> +91 8248654946</p>
+          <p><strong>மின்னஞ்சல் முகவரி:</strong> methagukalanjiyam@gmail.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p style="margin-bottom:12px;">
+    <a href="index.html" style="color:var(--green); font-weight:600;">← முகப்பிற்குத் திரும்புக</a>
+    <span style="margin:0 12px; color:var(--ink-soft);">|</span>
+    <a href="privacy.html" style="color:var(--green); font-weight:600;">தரவுப் பாதுகாப்புவழிகாட்டி</a>
+  </p>
+  <p>&copy; 2026 மேதகு களஞ்சியம். அனைத்துரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+</footer>
+
+<script>
+  const navToggleBtn = document.querySelector('.nav-toggle');
+  const navPanelEl = document.querySelector('.nav-panel');
+  if (navToggleBtn && navPanelEl) {
+    const closeMenu = () => {
+      navPanelEl.classList.remove('open');
+      navToggleBtn.classList.remove('active');
+      navToggleBtn.setAttribute('aria-expanded', 'false');
+      navToggleBtn.setAttribute('aria-label', 'Open menu');
+    };
+
+    navToggleBtn.addEventListener('click', () => {
+      const isOpen = navPanelEl.classList.toggle('open');
+      navToggleBtn.classList.toggle('active', isOpen);
+      navToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      navToggleBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+
+    navPanelEl.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('click', (event) => {
+      if (!navPanelEl.contains(event.target) && !navToggleBtn.contains(event.target)) {
+        closeMenu();
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
